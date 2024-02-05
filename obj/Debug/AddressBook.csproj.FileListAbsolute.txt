@@ -1,0 +1,8 @@
+E:\LOCOBUZZ_Training\AddressBook\obj\Debug\AddressBook.csproj.AssemblyReference.cache
+E:\LOCOBUZZ_Training\AddressBook\obj\Debug\AddressBook.csproj.SuggestedBindingRedirects.cache
+E:\LOCOBUZZ_Training\AddressBook\obj\Debug\AddressBook.csproj.CoreCompileInputs.cache
+E:\LOCOBUZZ_Training\AddressBook\bin\Debug\AddressBook.exe.config
+E:\LOCOBUZZ_Training\AddressBook\bin\Debug\AddressBook.exe
+E:\LOCOBUZZ_Training\AddressBook\bin\Debug\AddressBook.pdb
+E:\LOCOBUZZ_Training\AddressBook\obj\Debug\AddressBook.exe
+E:\LOCOBUZZ_Training\AddressBook\obj\Debug\AddressBook.pdb
