@@ -9,11 +9,39 @@ namespace AddressBook
     internal class Program
     {
         static Dictionary<String, Addressbook> addressBooks = new Dictionary<string, Addressbook>();
+        static String name;
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the address book");
-            AddContact();
+            Console.WriteLine("Enter the name of the address book: ");
+            name = Console.ReadLine();
+            bool flag = true;
+            while (flag)
+            {
+                Console.WriteLine("1. Add Contact\n2. Edit Contact\n3. Exit");
+                var inp = Console.ReadLine();
+                switch (inp)
+                {
+                    case "1":
+                        {
+                            AddContact();
+                            break;
+                        }
+                    case "2":
+                        {
+                            EditContact();
+                            break;
+                        }
+                    case "3":
+                        {
+                            flag = false;
+                            break;
+                        }
+                    default:
+                        break;
+                }
 
+            }
 
             
 
@@ -21,8 +49,7 @@ namespace AddressBook
 
         static void AddContact()
         {
-            Console.WriteLine("Enter the name of the address book: ");
-            String name = Console.ReadLine();
+
             if (addressBooks.ContainsKey(name))
             {
                 Console.WriteLine("addressBook name is already used");
@@ -57,5 +84,22 @@ namespace AddressBook
             }
             
         }
+        static void EditContact()
+        {
+            Console.Clear();
+            Console.Write("Enter the name of the contact you want to edit: ");
+            var inp = Console.ReadLine();
+            
+            foreach (Contact a in addressBooks[name].Contacts)
+            {
+                if(a.Name == inp)
+                {
+                    a.EditContact()
+                        break;
+                }
+            }
+
+        }
+        
     }
 }
