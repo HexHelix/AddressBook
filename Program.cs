@@ -11,8 +11,30 @@ namespace AddressBook
         static Dictionary<String, Addressbook> addressBooks = new Dictionary<string, Addressbook>();
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to the address book");
-            AddContact();
+            Console.WriteLine("Welcome to address book");
+            bool IsRunning = true;
+
+            while (IsRunning)
+            {
+                Console.WriteLine("1. Add Contact\nPress 'x' to exit.");
+                var inp = Console.ReadLine();
+
+                switch (inp)
+                {
+                    case "1":
+                        {
+                            AddContact();
+                            break;
+                        }
+                    case "x":
+                        {
+                            IsRunning = false;
+                            break;
+                        }
+                    default:
+                        break;
+                }
+            }
 
 
             
