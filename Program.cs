@@ -19,7 +19,7 @@ namespace AddressBook
             {
                 Console.Clear();
                 Console.WriteLine($"Current Address Book: {name}");
-                Console.WriteLine("1. Select Address Book\n2. Add Address Book\n3. Add Contact\n4. Edit Contact\n5. Delete Contact\n6. Exit");
+                Console.WriteLine("1. Select Address Book\n2. Add Address Book\n3. Add Contact\n4. Edit Contact\n5. Delete Contact\n6. Search contacts by city or state\n7. Exit");
                 var inp = Console.ReadLine();
                 switch (inp)
                 {
@@ -48,9 +48,14 @@ namespace AddressBook
                             DeleteContact();
                             break;
                         }
-                    case "6":
+                    case "7":
                         {
                             flag = false;
+                            break;
+                        }
+                    case "6":
+                        {
+                            SearchByCityState();
                             break;
                         }
                     default:
@@ -120,15 +125,17 @@ namespace AddressBook
 
             foreach( Contact cntc in addressBooks[name].Contacts)
             {
+                Console.WriteLine("");
                 cntc.PrintContact();
                 Console.WriteLine("");
             }
+            Thread.Sleep(1000);
             
         }
         static void EditContact()
         {
             Console.Clear();
-            if (!addressBooks.ContainsKey(name)) return;
+            if (name == null || !addressBooks.ContainsKey(name)) return;
             Console.Write("Enter the name of the contact you want to edit: ");
             var inp = Console.ReadLine();
             bool flag = false;
@@ -150,7 +157,7 @@ namespace AddressBook
         static void DeleteContact()
         {
             Console.Clear();
-            if (!addressBooks.ContainsKey(name)) return;
+            if (name == null || !addressBooks.ContainsKey(name)) return;
             Console.Write("Enter the name of the contact you want to Delete: ");
             var inp = Console.ReadLine();
             var i = 0;
@@ -195,6 +202,23 @@ namespace AddressBook
 
 
 
+        }
+
+        static void SearchByCityState()
+        {
+            Console.Write("Enter city or state name: ");
+            String inp = Console.ReadLine().ToLower();
+            foreach(var a in addressBooks)
+            {
+                foreach(var b in addressBooks[a.Key].Contacts)
+                {
+                    if(inp == b.City.ToLower() || inp == b.State.ToLower())
+                    {
+                        Console.WriteLine($"{b.Name + " " + b.LastName} (Address book -> {a.Key})");
+                    }
+                }
+            }
+            Console.ReadLine();
         }
         
     }
