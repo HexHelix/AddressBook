@@ -95,15 +95,19 @@ namespace AddressBook
             Console.Clear();
             Console.Write("Enter the name of the contact you want to edit: ");
             var inp = Console.ReadLine();
-            
+            bool flag = false;
+
             foreach (Contact a in addressBooks[name].Contacts)
             {
                 if(a.Name == inp)
                 {
                     a.EditContact();
-                        break;
+                    flag = true;
+                    break;
                 }
             }
+            if (flag) { Console.WriteLine("Contact Found."); }
+            else { Console.WriteLine("No contact of this name!"); }
 
         }
 
