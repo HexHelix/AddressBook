@@ -3,41 +3,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace AddressBook
 {
     internal class Program
     {
         static Dictionary<String, Addressbook> addressBooks = new Dictionary<string, Addressbook>();
-        static String name;
+        static String name = null;
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the address book");
-            Console.WriteLine("Enter the name of the address book: ");
-            name = Console.ReadLine();
             bool flag = true;
             while (flag)
             {
-                Console.WriteLine("1. Add Contact\n2. Edit Contact\n3. Delete Contact\n4. Exit");
+                Console.Clear();
+                Console.WriteLine($"Current Address Book: {name}");
+                Console.WriteLine("1. Select Address Book\n2. Add Address Book\n3. Add Contact\n4. Edit Contact\n5. Delete Contact\n6. Exit");
                 var inp = Console.ReadLine();
                 switch (inp)
                 {
                     case "1":
                         {
-                            AddContact();
+                            SelectAddressbook();
                             break;
                         }
                     case "2":
                         {
-                            EditContact();
+                            AddAddressbooks();
                             break;
                         }
                     case "3":
                         {
-                            DeleteContact();
+                            AddContact();
                             break;
                         }
                     case "4":
+                        {
+                            EditContact();
+                            break;
+                        }
+                    case "5":
+                        {
+                            DeleteContact();
+                            break;
+                        }
+                    case "6":
                         {
                             flag = false;
                             break;
@@ -52,18 +63,32 @@ namespace AddressBook
 
         }
 
-        static void AddContact()
+        static void AddAddressbooks()
         {
+            //Console.WriteLine(addressBooks.Count());
 
-            if (addressBooks.ContainsKey(name))
+            Console.Write("Enter the name of the address book: ");
+            var inp = Console.ReadLine();
+            if (addressBooks.ContainsKey(inp))
             {
                 Console.WriteLine("addressBook name is already used");
+                Thread.Sleep(1500);
             }
             else
             {
-                addressBooks.Add(name,new Addressbook(name));
-                Console.WriteLine("Address book successfully created!");
+                addressBooks.Add(inp, new Addressbook(inp));
+                Console.WriteLine($"Address book {inp} successfully created!");
+                Thread.Sleep(1500);
             }
+
+
+        }
+
+        static void AddContact()
+        {
+            if (!addressBooks.ContainsKey(name)) return;
+
+
             Console.Write("Enter First Name: ");
             String FName = Console.ReadLine();
             Console.Write("Enter Last Name: ");
@@ -93,6 +118,7 @@ namespace AddressBook
         static void EditContact()
         {
             Console.Clear();
+            if (!addressBooks.ContainsKey(name)) return;
             Console.Write("Enter the name of the contact you want to edit: ");
             var inp = Console.ReadLine();
             bool flag = false;
@@ -114,6 +140,7 @@ namespace AddressBook
         static void DeleteContact()
         {
             Console.Clear();
+            if (!addressBooks.ContainsKey(name)) return;
             Console.Write("Enter the name of the contact you want to Delete: ");
             var inp = Console.ReadLine();
             var i = 0;
@@ -131,6 +158,31 @@ namespace AddressBook
             }
             if (flag) { Console.WriteLine("Contact Deleted."); }
             else { Console.WriteLine("No contact of this name!"); }
+
+
+        }
+        static void SelectAddressbook()
+        {
+            Console.Clear();
+            Console.WriteLine("Available Address Books");
+            foreach (var a in addressBooks)
+            {
+                Console.WriteLine(a.Key);
+            }
+            Console.WriteLine("Type the name of the address book you want to use:");
+            var inp = Console.ReadLine();
+            if (addressBooks.ContainsKey(inp))
+            {
+                name = inp;
+                Console.WriteLine($"Using Address book: {name}");
+                Thread.Sleep(1500);
+            }
+            else
+            {
+                Console.WriteLine($"Address book {inp} not created.");
+                Thread.Sleep(1500);
+            }
+
 
 
         }
