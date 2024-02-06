@@ -18,7 +18,7 @@ namespace AddressBook
             bool flag = true;
             while (flag)
             {
-                Console.WriteLine("1. Add Contact\n2. Edit Contact\n3. Exit");
+                Console.WriteLine("1. Add Contact\n2. Edit Contact\n3. Delete Contact\n4. Exit");
                 var inp = Console.ReadLine();
                 switch (inp)
                 {
@@ -33,6 +33,11 @@ namespace AddressBook
                             break;
                         }
                     case "3":
+                        {
+                            DeleteContact();
+                            break;
+                        }
+                    case "4":
                         {
                             flag = false;
                             break;
@@ -81,6 +86,7 @@ namespace AddressBook
             foreach( Contact cntc in addressBooks[name].Contacts)
             {
                 cntc.PrintContact();
+                Console.WriteLine("");
             }
             
         }
@@ -94,10 +100,34 @@ namespace AddressBook
             {
                 if(a.Name == inp)
                 {
-                    a.EditContact()
+                    a.EditContact();
                         break;
                 }
             }
+
+        }
+
+        static void DeleteContact()
+        {
+            Console.Clear();
+            Console.Write("Enter the name of the contact you want to Delete: ");
+            var inp = Console.ReadLine();
+            var i = 0;
+            bool flag = false;
+
+            foreach (Contact a in addressBooks[name].Contacts)
+            {
+                if (a.Name == inp)
+                {
+                    addressBooks[name].Contacts.RemoveAt(i);
+                    flag = true;
+                    break;
+                }
+                i++;
+            }
+            if (flag) { Console.WriteLine("Contact Deleted."); }
+            else { Console.WriteLine("No contact of this name!"); }
+
 
         }
         
