@@ -86,7 +86,7 @@ namespace AddressBook
 
         static void AddContact()
         {
-            if (!addressBooks.ContainsKey(name)) return;
+            if (name == null || !addressBooks.ContainsKey(name)) return;
 
 
             Console.Write("Enter First Name: ");
@@ -105,6 +105,16 @@ namespace AddressBook
             String PhoneNumber = Console.ReadLine();
             Console.Write("Enter Email: ");
             String Email = Console.ReadLine();
+
+            foreach(var a in addressBooks[name].Contacts)
+            {
+                if (a.Equals((FName + LName))){
+                    Console.WriteLine("Contact with same name already exists!");
+                    Thread.Sleep(1000);
+                    return;
+                }
+
+            } 
 
             addressBooks[name].AddContact(new Contact(FName, LName, Address, City,State, Zip, PhoneNumber, Email));
 

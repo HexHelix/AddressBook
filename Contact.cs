@@ -115,5 +115,11 @@ namespace AddressBook
 
 
         }
+
+        public bool Equals(String n)
+        {
+            if(n == (Name + LastName))return true;
+            else return false;
+        }
     }
 }
