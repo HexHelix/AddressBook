@@ -67,6 +67,22 @@ namespace AddressBook
             }
         }
 
-        
+        private void SortByName()
+        {
+           Contacts.Sort((x,y)=>x.Name.CompareTo(y.Name));
+        }
+        public override string ToString()
+        {
+            SortByName();
+            string s;
+            foreach(var contact in Contacts)
+            {
+                Console.WriteLine(contact.Name);
+            }
+            
+            return "";
+        }
+
+
     }
 }

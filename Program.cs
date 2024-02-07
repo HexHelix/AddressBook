@@ -19,7 +19,7 @@ namespace AddressBook
             {
                 Console.Clear();
                 Console.WriteLine($"Current Address Book: {name}");
-                Console.WriteLine("1. Select Address Book\n2. Add Address Book\n3. Add Contact\n4. Edit Contact\n5. Delete Contact\n6. Search contacts by city or state\n7. Display Contacts by City and State\n8. Exit");
+                Console.WriteLine("1. Select Address Book\n2. Add Address Book\n3. Add Contact\n4. Edit Contact\n5. Delete Contact\n6. Search contacts by city or state\n7. Display Contacts by City and State\n8. Sort Contacts\n9. Sort By Name\n10.Exit");
                 var inp = Console.ReadLine();
                 switch (inp)
                 {
@@ -48,7 +48,7 @@ namespace AddressBook
                             DeleteContact();
                             break;
                         }
-                    case "8":
+                    case "10":
                         {
                             flag = false;
                             break;
@@ -64,6 +64,16 @@ namespace AddressBook
                             if (name == null || !addressBooks.ContainsKey(name)) break;
                             addressBooks[name].PrintNameByCityState();
                             Console.ReadLine();
+                            break;
+                        }
+                    case "8":
+                        {
+                            SortByName();
+                            break;
+                        }
+                    case "9":
+                        {
+                            SortByName();
                             break;
                         }
                     default:
@@ -226,6 +236,12 @@ namespace AddressBook
                     }
                 }
             }
+            Console.ReadLine();
+        }
+
+        static void SortByName()
+        {
+            addressBooks[name].ToString();
             Console.ReadLine();
         }
         
