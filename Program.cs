@@ -19,7 +19,7 @@ namespace AddressBook
             {
                 Console.Clear();
                 Console.WriteLine($"Current Address Book: {name}");
-                Console.WriteLine("1. Select Address Book\n2. Add Address Book\n3. Add Contact\n4. Edit Contact\n5. Delete Contact\n6. Search contacts by city or state\n7. Exit");
+                Console.WriteLine("1. Select Address Book\n2. Add Address Book\n3. Add Contact\n4. Edit Contact\n5. Delete Contact\n6. Search contacts by city or state\n7. Display Contacts by City and State\n8. Exit");
                 var inp = Console.ReadLine();
                 switch (inp)
                 {
@@ -48,7 +48,7 @@ namespace AddressBook
                             DeleteContact();
                             break;
                         }
-                    case "7":
+                    case "8":
                         {
                             flag = false;
                             break;
@@ -56,6 +56,14 @@ namespace AddressBook
                     case "6":
                         {
                             SearchByCityState();
+                            break;
+                        }
+                    case "7":
+                        {
+                            Console.Clear();
+                            if (name == null || !addressBooks.ContainsKey(name)) break;
+                            addressBooks[name].PrintNameByCityState();
+                            Console.ReadLine();
                             break;
                         }
                     default:
@@ -208,11 +216,11 @@ namespace AddressBook
         {
             Console.Write("Enter city or state name: ");
             String inp = Console.ReadLine().ToLower();
-            foreach(var a in addressBooks)
+            foreach (var a in addressBooks)
             {
-                foreach(var b in addressBooks[a.Key].Contacts)
+                foreach (var b in addressBooks[a.Key].Contacts)
                 {
-                    if(inp == b.City.ToLower() || inp == b.State.ToLower())
+                    if (inp == b.City.ToLower() || inp == b.State.ToLower())
                     {
                         Console.WriteLine($"{b.Name + " " + b.LastName} (Address book -> {a.Key})");
                     }
