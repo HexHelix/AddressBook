@@ -67,17 +67,28 @@ namespace AddressBook
             }
         }
 
-        private void SortByName()
+        public void SortByName()
         {
            Contacts.Sort((x,y)=>x.Name.CompareTo(y.Name));
         }
+        public void SortByCity()
+        {
+            Contacts.Sort((x, y) => x.City.CompareTo(y.City));
+        }
+        public void SortByState()
+        {
+            Contacts.Sort((x, y) => x.State.CompareTo(y.State));
+        }
+        public void SortByZip()
+        {
+            Contacts.Sort((x, y) => x.Zip.CompareTo(y.Zip));
+        }
         public override string ToString()
         {
-            SortByName();
             string s;
             foreach(var contact in Contacts)
             {
-                Console.WriteLine(contact.Name);
+                Console.WriteLine($"Name: {contact.Name} City: {contact.City} State: {contact.State} Zip: {contact.Zip}");
             }
             
             return "";

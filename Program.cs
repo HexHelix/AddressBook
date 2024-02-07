@@ -244,6 +244,27 @@ namespace AddressBook
             addressBooks[name].ToString();
             Console.ReadLine();
         }
-        
+
+        static void SortByCity()
+        {
+            addressBooks[name].SortByCity();
+            addressBooks[name].ToString();
+            Console.ReadLine();
+        }
+
+        static void SortByState()
+        {
+            addressBooks[name].SortByState();
+            addressBooks[name].ToString();
+            Console.ReadLine();
+        }
+
+        static void SortByZip()
+        {
+            addressBooks[name].SortByZip();
+            addressBooks[name].ToString();
+            Console.ReadLine();
+        }
+
     }
 }
