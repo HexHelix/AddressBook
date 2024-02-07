@@ -51,7 +51,7 @@ namespace AddressBook
         {
             foreach(var a in CityName)
             {
-                Console.WriteLine($"Contacts in City {a.Key.ToUpper()}:");
+                Console.WriteLine($"Contacts in City {a.Key.ToUpper()} -- [{a.Value.Count}]");
                 foreach(var b in a.Value)
                 {
                     Console.WriteLine(b);
@@ -59,7 +59,7 @@ namespace AddressBook
             }
             foreach (var a in StateName)
             {
-                Console.WriteLine($"Contacts in State {a.Key.ToUpper()}:");
+                Console.WriteLine($"Contacts in State {a.Key.ToUpper()} -- [{a.Value.Count}]");
                 foreach (var b in a.Value)
                 {
                     Console.WriteLine(b);
