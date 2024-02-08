@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+
 namespace AddressBook
 {
     [Serializable]
@@ -87,7 +88,7 @@ namespace AddressBook
         }
         public override string ToString()
         {
-            string s;
+            
             foreach(var contact in Contacts)
             {
                 Console.WriteLine($"Name: {contact.Name} City: {contact.City} State: {contact.State} Zip: {contact.Zip}");

@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Runtime.Serialization.Formatters.Binary;
+using CsvHelper;
+using System.Globalization;
 
 namespace AddressBook
 {
@@ -14,6 +16,7 @@ namespace AddressBook
         static Dictionary<String, Addressbook> addressBooks = new Dictionary<string, Addressbook>();
         static String name = null;
         static string filePath = "address_book.bin";
+        static string filePathCsv = "address_book.csv";
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the address book");
@@ -92,32 +95,87 @@ namespace AddressBook
 
         static void ReadAddressBookFromFile()
         {
-            if (!File.Exists(filePath))
+            /*            if (!File.Exists(filePath))
+                        {
+                            return; // No file, nothing to read
+                        }
+
+                        using (FileStream stream = File.OpenRead(filePath))
+                        {
+                            BinaryFormatter formatter = new BinaryFormatter();
+                            try
+                            {
+                                addressBooks = (Dictionary<string, AddressBook.Addressbook>)formatter.Deserialize(stream);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("Error reading address book from file: " + ex.Message);
+                            }
+                        }*/
+/*            if (!File.Exists(filePath))
             {
                 return; // No file, nothing to read
             }
 
-            using (FileStream stream = File.OpenRead(filePath))
+            using (var reader = new StreamReader(filePath))
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-                try
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture)) // Optional for locale-specific handling
                 {
-                    addressBooks = (Dictionary<string, AddressBook.Addressbook>)formatter.Deserialize(stream);
+                    try
+                    {
+                        addressBooks = csv.GetRecords<AddressBook.Addressbook>().ToDictionary(a => a.Name);
+                    }
+                    catch (CsvHelperException ex)
+                    {
+                        Console.WriteLine("Error reading CSV file: {0}", ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error reading address book from file: " + ex.Message);
-                }
-            }
+            }*/
         }
 
         static void SaveAddressBookToFile()
         {
-            using (FileStream stream = File.OpenWrite(filePath))
+/*            using (FileStream stream = File.OpenWrite(filePath))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 formatter.Serialize(stream, addressBooks);
                 Console.WriteLine("Address book saved successfully.");
+            }*/
+
+            using (var writer = new StreamWriter(filePathCsv))
+            {
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) // Assuming desired culture
+                {
+                    csv.WriteField("AddressBook Name");
+                    csv.WriteField("Contact Name");
+                    csv.WriteField("Address");
+                    csv.WriteField("City");
+                    csv.WriteField("State");
+                    csv.WriteField("Zip");
+                    csv.WriteField("Phone");
+                    csv.WriteField("Email");
+                    csv.NextRecord();
+
+                    foreach (var a in addressBooks)
+                    {
+                        foreach (var b in addressBooks[a.Key].Contacts)
+                        {
+                            csv.WriteField(a.Key);
+                            csv.WriteField(b.Name + b.LastName);
+                            csv.WriteField(b.Address);
+                            csv.WriteField(b.City);
+                            csv.WriteField(b.State);
+                            csv.WriteField(b.Zip);
+                            csv.WriteField(b.Phone);
+                            csv.WriteField(b.Email);
+                            csv.NextRecord();
+                        }
+                    }
+
+
+                    csv.WriteRecords(addressBooks); // Write address book records
+                    Console.WriteLine("Address book saved successfully.");
+                }
             }
         }
         static void AddAddressbooks()
