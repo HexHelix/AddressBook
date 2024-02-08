@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace AddressBook
 {
@@ -11,10 +13,12 @@ namespace AddressBook
     {
         static Dictionary<String, Addressbook> addressBooks = new Dictionary<string, Addressbook>();
         static String name = null;
+        static string filePath = "address_book.bin";
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the address book");
             bool flag = true;
+            ReadAddressBookFromFile();
             while (flag)
             {
                 Console.Clear();
@@ -86,10 +90,40 @@ namespace AddressBook
 
         }
 
+        static void ReadAddressBookFromFile()
+        {
+            if (!File.Exists(filePath))
+            {
+                return; // No file, nothing to read
+            }
+
+            using (FileStream stream = File.OpenRead(filePath))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                try
+                {
+                    addressBooks = (Dictionary<string, AddressBook.Addressbook>)formatter.Deserialize(stream);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error reading address book from file: " + ex.Message);
+                }
+            }
+        }
+
+        static void SaveAddressBookToFile()
+        {
+            using (FileStream stream = File.OpenWrite(filePath))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, addressBooks);
+                Console.WriteLine("Address book saved successfully.");
+            }
+        }
         static void AddAddressbooks()
         {
             //Console.WriteLine(addressBooks.Count());
-
+            ReadAddressBookFromFile();
             Console.Write("Enter the name of the address book: ");
             var inp = Console.ReadLine();
             if (addressBooks.ContainsKey(inp))
@@ -103,6 +137,7 @@ namespace AddressBook
                 Console.WriteLine($"Address book {inp} successfully created!");
                 Thread.Sleep(1500);
             }
+            SaveAddressBookToFile();
 
 
         }
@@ -110,6 +145,7 @@ namespace AddressBook
         static void AddContact()
         {
             if (name == null || !addressBooks.ContainsKey(name)) return;
+            ReadAddressBookFromFile();
 
 
             Console.Write("Enter First Name: ");
@@ -147,6 +183,7 @@ namespace AddressBook
                 cntc.PrintContact();
                 Console.WriteLine("");
             }
+            SaveAddressBookToFile();
             Thread.Sleep(1000);
             
         }
@@ -154,6 +191,7 @@ namespace AddressBook
         {
             Console.Clear();
             if (name == null || !addressBooks.ContainsKey(name)) return;
+            ReadAddressBookFromFile();
             Console.Write("Enter the name of the contact you want to edit: ");
             var inp = Console.ReadLine();
             bool flag = false;
@@ -169,13 +207,16 @@ namespace AddressBook
             }
             if (flag) { Console.WriteLine("Contact Found."); }
             else { Console.WriteLine("No contact of this name!"); }
+            SaveAddressBookToFile();
 
         }
 
         static void DeleteContact()
         {
             Console.Clear();
+            
             if (name == null || !addressBooks.ContainsKey(name)) return;
+            ReadAddressBookFromFile();
             Console.Write("Enter the name of the contact you want to Delete: ");
             var inp = Console.ReadLine();
             var i = 0;
@@ -193,6 +234,7 @@ namespace AddressBook
             }
             if (flag) { Console.WriteLine("Contact Deleted."); }
             else { Console.WriteLine("No contact of this name!"); }
+            SaveAddressBookToFile();
 
 
         }

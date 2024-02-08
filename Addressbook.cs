@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace AddressBook
 {
+    [Serializable]
     internal class Addressbook
     {
         public String Name { get; set; }
